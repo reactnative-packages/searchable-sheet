@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "declaration": true,
+    "strict": true
+  },
+  "include": ["dos/**/*.ts", "dos/**/*.tsx", "index.ts"],
+  "exclude": ["node_modules", "dist"]
+}
