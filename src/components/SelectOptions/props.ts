@@ -5,4 +5,5 @@ export type Props = {
   onClear: () => void;
   onPress: () => void;
   style?: ViewStyle;
+  iconColor?: string;
 };

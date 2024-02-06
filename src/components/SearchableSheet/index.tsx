@@ -1,18 +1,52 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  Ref,
+  RefAttributes,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { Animated, FlatList, Modal, Platform, Text, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import { FormInput } from "../FormInput";
 import { SearchableItem } from "../SearchableItem";
-import { Props } from "./props";
+import { SelectAnchor } from "../SelectAnchor";
+import { Props, SearchableSheetRef } from "./props";
 import { useStyles } from "./styles";
 
-export function SearchableSheet(props: Readonly<Props>) {
-  const { tintColor, onChange, backgroundColor } = props;
-  const { styles } = useStyles();
+function SearchableSheet<T>(
+  props: Readonly<Props<T>>,
+  ref: Ref<SearchableSheetRef>
+) {
+  const {
+    tintColor,
+    onChange,
+    backgroundColor,
+    inputStyle = {},
+    nameExtractor,
+  } = props;
+  const { styles, rxStyles } = useStyles();
   const [search, setSearch] = useState<string>();
   const [filtered, setFiltered] = useState(props.data);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [visible, setVisible] = useState(false);
+
+  function show() {
+    setVisible(true);
+  }
+
+  function hide() {
+    setVisible(false);
+  }
+
+  // Exponer métodos al componente padre
+  useImperativeHandle(ref, () => ({
+    show,
+    hide,
+  }));
 
   useEffect(() => {
     setFiltered(props.data);
@@ -38,29 +72,59 @@ export function SearchableSheet(props: Readonly<Props>) {
 
   function handleOnDissmiss() {
     setSearch("");
-    props.onHide();
+    hide();
   }
 
-  function handleSelect(value: any) {
+  function handleSelect(value: T) {
     handleOnDissmiss();
     fadeAnim.setValue(0);
+    // Definir el tipo de datos de la lista
     onChange(value);
   }
 
+  const ItemSeparatorComponent = useCallback(
+    () => <View style={[styles.separator, props.separatorStyle]} />,
+    [props.separatorStyle]
+  );
+
+  const AnchorComponent = useCallback(
+    () =>
+      props.anchor ?? (
+        <SelectAnchor
+          label={props.title}
+          placeholder={props.placeholder}
+          onPress={show}
+          required={props.required}
+          onClear={() => props.onClear?.()}
+          tintColor={tintColor}
+        />
+      ),
+    [
+      props.anchor,
+      props.title,
+      props.placeholder,
+      props.required,
+      props.onClear,
+      tintColor,
+    ]
+  );
+
   return (
     <>
-      {props.anchor}
+      <AnchorComponent />
       {props?.error}
       <Modal
         animationType={Platform.select({ ios: "none", android: "fade" })}
-        visible={props.visible}
+        visible={visible}
         onRequestClose={handleOnDissmiss}
         transparent
       >
-        <View style={[styles.wrapper, backgroundColor && { backgroundColor }]}>
+        <View style={rxStyles.wrapper({ backgroundColor })}>
           <View style={[styles.overlay]}>
             <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, props.titleStyle]}>
+              <Text
+                style={[rxStyles.titleText({ tintColor }), props.titleStyle]}
+              >
                 {props.title}
               </Text>
               {!props?.hideClose ? (
@@ -83,7 +147,7 @@ export function SearchableSheet(props: Readonly<Props>) {
               value={search}
               label={props.inputLabel}
               placeholder={props.placeholder}
-              containerStyle={[styles.input, props.inputStyle]}
+              containerStyle={[styles.input, inputStyle]}
               labelStyle={props.inputLabelStyle}
               tintColor={tintColor}
             />
@@ -101,24 +165,23 @@ export function SearchableSheet(props: Readonly<Props>) {
                     }
                   );
                 }
+                const title = nameExtractor?.(item) ?? "";
+
                 return (
                   <SearchableItem
                     onPress={() => handleSelect(item)}
-                    title={item.name}
+                    title={title}
                     surfaceStyle={styles.surface}
                     touchableStyle={styles.touchable}
-                    labelStyle={[
-                      styles.searchItemLabel,
-                      tintColor && { color: tintColor },
-                    ]}
+                    labelStyle={rxStyles.searchItemLabel({ tintColor })}
                   />
                 );
               }}
               initialNumToRender={100}
               style={[styles.flatlist, props.flatListStyle]}
-              ItemSeparatorComponent={() => (
-                <View style={[styles.separator, props.separatorStyle]} />
-              )}
+              ItemSeparatorComponent={ItemSeparatorComponent}
+              onEndReached={props.onEndReached}
+              onEndReachedThreshold={props.onEndReachedThreshold}
             />
             <View style={[styles.bottomSpacer, props.bottomStyle]} />
           </View>
@@ -127,3 +190,7 @@ export function SearchableSheet(props: Readonly<Props>) {
     </>
   );
 }
+
+export default forwardRef(SearchableSheet) as <T>(
+  props: Props<T> & RefAttributes<SearchableSheetRef>
+) => JSX.Element;

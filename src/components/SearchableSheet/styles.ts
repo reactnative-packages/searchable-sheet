@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, TextStyle } from "react-native";
 
 export function useStyles() {
   return {
@@ -28,12 +28,6 @@ export function useStyles() {
         borderTopLeftRadius: 12,
         padding: 16,
         flexDirection: "row",
-      },
-      titleText: {
-        fontSize: 16,
-        color: "black",
-        fontWeight: "bold",
-        flexGrow: 1,
       },
       input: {
         backgroundColor: "white",
@@ -67,10 +61,34 @@ export function useStyles() {
         paddingHorizontal: 16,
         flexGrow: 1,
       },
-      searchItemLabel: {
+    }),
+    rxStyles: {
+      searchItemLabel: ({ tintColor }: { tintColor?: string }): TextStyle => ({
         fontWeight: "400",
         fontSize: 16,
-      },
-    }),
+        ...(tintColor && {
+          color: tintColor,
+        }),
+      }),
+      titleText: ({ tintColor }: { tintColor?: string }): TextStyle => ({
+        fontSize: 16,
+        fontWeight: "bold",
+        flexGrow: 1,
+        ...(tintColor && {
+          color: tintColor,
+        }),
+      }),
+      wrapper: ({
+        backgroundColor,
+      }: {
+        backgroundColor?: string;
+      }): TextStyle => ({
+        flex: 1,
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+        backgroundColor: backgroundColor ?? "rgba(0, 0, 0, 0.5)",
+      }),
+    },
   };
 }

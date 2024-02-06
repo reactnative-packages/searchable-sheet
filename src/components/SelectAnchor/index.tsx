@@ -6,6 +6,7 @@ import { Props } from "./props";
 import { useStyles } from "./styles";
 
 export function SelectAnchor(props: Readonly<Props>) {
+  const { tintColor } = props;
   const { styles } = useStyles();
 
   const Icon = useCallback(
@@ -14,9 +15,10 @@ export function SelectAnchor(props: Readonly<Props>) {
         onPress={props.onPress}
         onClear={props.onClear}
         isEmpty={!props.label}
+        iconColor={tintColor}
       />
     ),
-    [props.label, props.onPress, props.onClear]
+    [props.label, tintColor, props.onPress, props.onClear]
   );
 
   return (
@@ -28,6 +30,7 @@ export function SelectAnchor(props: Readonly<Props>) {
       mode="elevated"
       labelStyle={styles.anchorLabel}
       loading={props.loading}
+      textColor={tintColor}
     >
       {props.label ?? `${props.placeholder} ${props.required ? "*" : ""}`}
     </Button>

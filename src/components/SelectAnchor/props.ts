@@ -8,4 +8,5 @@ export type Props = {
   style?: ViewStyle;
   required?: boolean;
   loading?: boolean;
+  tintColor?: string;
 };
