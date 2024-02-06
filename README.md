@@ -19,11 +19,11 @@ add github package to `package.json`
 ## Usage
 
 Default usage
+
 ```typescript
 import { SearchableSheet } from "reactnative-packages/searchable-sheet";
 
 export function Home() {
-
   return (
     <>
       {/** other components */}
@@ -56,10 +56,12 @@ Exposes dynamically loaded modules in the application based on the specific perm
 ### Anchor Component
 
 ```typescript
-import { SearchableSheet, SelectAnchor } from "reactnative-packages/searchable-sheet";
+import {
+  SearchableSheet,
+  SelectAnchor,
+} from "reactnative-packages/searchable-sheet";
 
 export function Home() {
-
   return (
     <>
       {/** other components */}
@@ -89,10 +91,12 @@ export function Home() {
 ### Render Item
 
 ```typescript
-import { SearchableSheet, SearchableItem } from "reactnative-packages/searchable-sheet";
+import {
+  SearchableSheet,
+  SearchableItem,
+} from "reactnative-packages/searchable-sheet";
 
 export function Home() {
-
   return (
     <>
       {/** other components */}
@@ -117,11 +121,15 @@ export function Home() {
     </>
   );
 }
-
 ```
+
 ### Use ref
+
 ```typescript
-import { SearchableSheet, SearchableSheetRef } from "reactnative-packages/searchable-sheet";
+import {
+  SearchableSheet,
+  SearchableSheetRef,
+} from "reactnative-packages/searchable-sheet";
 
 export function Home() {
   const searchableRef = useRef<SearchableSheetRef>(null);
@@ -159,10 +167,10 @@ export function Home() {
     </>
   );
 }
-
 ```
 
 ### About Props
-| Prop              | Description                                                                                                      |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+
+| Prop      | Description                             |
+| --------- | --------------------------------------- |
 | tintColor | sets the primary color of the component |
