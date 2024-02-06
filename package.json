@@ -1,0 +1,37 @@
+{
+  "name": "searchable-sheet",
+  "version": "1.0.0",
+  "description": "React Native component that provides a select with a search bar",
+  "main": "index.ts",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reactnative-packages/searchable-sheet.git"
+  },
+  "keywords": [
+    "React Native"
+  ],
+  "author": "Jeferson Hernandez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactnative-packages/searchable-sheet/issues"
+  },
+  "homepage": "https://github.com/reactnative-packages/searchable-sheet#readme",
+  "publishConfig": {
+    "@reactnative-packages:registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-paper": "^5.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "@types/react": "~18.2.14",
+    "react-native-paper": "^5.9.1"
+  }
+}
