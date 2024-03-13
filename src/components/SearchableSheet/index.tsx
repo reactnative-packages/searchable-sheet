@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Animated, FlatList, Modal, Platform, Text, View } from "react-native";
+import { Animated, FlatList, Modal, Platform, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import { FormInput } from "../FormInput";
@@ -122,11 +122,6 @@ function SearchableSheet<T>(
         <View style={rxStyles.wrapper({ backgroundColor })}>
           <View style={[styles.overlay]}>
             <View style={styles.titleContainer}>
-              <Text
-                style={[rxStyles.titleText({ tintColor }), props.titleStyle]}
-              >
-                {props.title}
-              </Text>
               {!props?.hideClose ? (
                 <IconButton
                   icon="close-circle"

@@ -22,12 +22,13 @@ export function useStyles() {
         borderRadius: 12,
       },
       titleContainer: {
-        justifyContent: "center",
+        // justifyContent: "center",
         backgroundColor: "#fff",
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
-        padding: 16,
-        flexDirection: "row",
+        // padding: 16,
+        // flexDirection: "row",
+        // borderWidth: 1,
       },
       input: {
         backgroundColor: "white",
@@ -43,8 +44,9 @@ export function useStyles() {
         borderBottomRightRadius: 12,
       },
       closeIcon: {
-        margin: -10,
-        marginLeft: 0,
+        // margin: -10,
+        // marginLeft: 0,
+        alignSelf: "flex-end",
       },
       separator: {
         ...(Platform.OS === "ios" && {
@@ -66,14 +68,6 @@ export function useStyles() {
       searchItemLabel: ({ tintColor }: { tintColor?: string }): TextStyle => ({
         fontWeight: "400",
         fontSize: 16,
-        ...(tintColor && {
-          color: tintColor,
-        }),
-      }),
-      titleText: ({ tintColor }: { tintColor?: string }): TextStyle => ({
-        fontSize: 16,
-        fontWeight: "bold",
-        flexGrow: 1,
         ...(tintColor && {
           color: tintColor,
         }),
